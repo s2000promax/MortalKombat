@@ -18,6 +18,8 @@ const player2 = {
     }
 }
 
+const $root = document.querySelector('.arenas')
+
 function createPlayer(playerClass,/* playerName, hp,*/ playerObject){
     const $player = document.createElement('div')
     $player.classList.add(playerClass)
@@ -28,8 +30,7 @@ function createPlayer(playerClass,/* playerName, hp,*/ playerObject){
 
             const $life = document.createElement('div')
             $life.classList.add('life')
-            // $life.innerText=hp
-            // $life.innerText=playerObject.hp //Выводится текс, но, думаю, что лучше это связать с графикой
+            $life.style.width = `${playerObject.hp}%` //Добавил width, связал со свойством из объектом
             $progressbar.appendChild($life)
 
             const $name = document.createElement('div')
@@ -48,7 +49,7 @@ function createPlayer(playerClass,/* playerName, hp,*/ playerObject){
         $player.appendChild($character)
 
  
-    const $root = document.querySelector('.arenas')
+    
     $root.appendChild($player)
 }
 
