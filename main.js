@@ -25,6 +25,7 @@ const player2 = {
 
 const $arenas = document.querySelector(".arenas");
 const $randomButton = document.querySelector(".button");
+const $restartButton = document.querySelector(".control")
 
 //Функция создает элемент HTML
 function createElement(tag, className) {
@@ -79,7 +80,7 @@ function playerWin(name) {
   if (name) {
     $winTitle.innerText = name + " wins";
   } else $winTitle.innerText = "DEAD BOTH";
-  
+
   return $winTitle;
 }
 
@@ -118,7 +119,7 @@ function buttonRender(bool) {
     $randomButton.disabled = true; //Блокируем кнопку Random
     $randomButton.style = "display: none";
 
-    $arenas.appendChild(createReloadButton()); //Рендерим кнопку Restart
+    $restartButton.appendChild(createReloadButton()); //Рендерим кнопку Restart
   }
 }
 
