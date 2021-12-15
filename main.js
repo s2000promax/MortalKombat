@@ -11,6 +11,7 @@ const player1 = {
   },
   changeHP: changeHP,
   renderHP: renderHP,
+  elHP: elHP,
 };
 
 const player2 = {
@@ -21,6 +22,7 @@ const player2 = {
   weapon: ["topGun", "rifleGun", "rifle"],
   changeHP: changeHP,
   renderHP: renderHP,
+  elHP: elHP,
 };
 
 const $arenas = document.querySelector(".arenas");
@@ -107,16 +109,17 @@ function elHP() {
 
 //Функция отрисовывает "жизнь" у определенного объекта (игрока)
 function renderHP() {
-  const $playerLife = elHP.call(this); //Функции elHP передаем объект player через метод call
-  $playerLife.style.width = `${this.hp}%`;
+  //const $playerLife = elHP.call(this); //Функции elHP передаем объект player через метод call
+ // $playerLife.style.width = `${this.hp}%`;
 
-  return $playerLife;
+  //return $playerLife;
+  return this.elHP().style.width = `${this.hp}%`;
 }
 
 //Функция управляет отоборажением кнопок
 function buttonRender(bool) {
   if (bool) {
-    $randomButton.disabled = true; //Блокируем кнопку Random
+    //$randomButton.disabled = true; //Блокируем кнопку Random
     $randomButton.style = "display: none";
 
     $restartButton.appendChild(createReloadButton()); //Рендерим кнопку Restart
