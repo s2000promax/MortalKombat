@@ -3,38 +3,42 @@ const HIT = {
   body: 25,
   foot: 20,
 };
-const ATTACK = ["head", "body", "foot"];
+const ATTACK = ['head', 'body', 'foot'];
+
+const $arenas = document.querySelector('.arenas');
+const $formControl = document.querySelector('.control');
+const $winTitle = createElement('div', 'loseTitle');
 
 const player1 = {
   player: 1,
-  name: "Subzero",
-  // name: 'SCORPION',
+  name: 'Subzero',
   hp: 100,
-  img: "http://reactmarathon-api.herokuapp.com/assets/subzero.gif",
-  // img: 'http://reactmarathon-api.herokuapp.com/assets/scorpion.gif',
-  weapon: ["topGun", "rifleGun", "bomb"],
-  attack: function () {
-    console.log(this.name + " Fight...");
-  },
-  changeHP: changeHP,
-  renderHP: renderHP,
-  elHP: elHP,
+  img: 'http://reactmarathon-api.herokuapp.com/assets/subzero.gif',
+  weapon: ['topGun', 'rifleGun', 'bomb'],
+  changeHP,
+  renderHP,
+  elHP,
 };
 
 const player2 = {
   player: 2,
-  name: "Sonya",
+  name: 'Sonya',
   hp: 100,
-  img: "http://reactmarathon-api.herokuapp.com/assets/sonya.gif",
-  weapon: ["topGun", "rifleGun", "rifle"],
-  changeHP: changeHP,
-  renderHP: renderHP,
-  elHP: elHP,
+  img: 'http://reactmarathon-api.herokuapp.com/assets/sonya.gif',
+  weapon: ['topGun', 'rifleGun', 'rifle'],
+  changeHP,
+  renderHP,
+  elHP,
 };
 
-//Функция создает элемент HTML
+/**
+ * Функция создает элемент HTML
+ * @param {string} tag
+ * @param {string} className
+ * @returns {HTMLElement}
+ */
 function createElement(tag, className) {
-  $tag = document.createElement(tag);
+  const $tag = document.createElement(tag);
   if (className) {
     $tag.classList.add(className);
   }
@@ -42,36 +46,39 @@ function createElement(tag, className) {
   return $tag;
 }
 
-const $arenas = document.querySelector(".arenas");
-const $formControl = document.querySelector(".control");
-const $winTitle = createElement("div", "loseTitle");
 
-
-//Функция создает кнопку перезагрузки
+/**
+ * Функция создает кнопку перезагрузки
+ *
+ * @returns {HTMLElement}
+ */
 function createReloadButton() {
-  const $div = createElement("div", "reloadWrap");
-  const $btn = createElement("button", "button");
+  const $div = createElement('div', 'reloadWrap');
+  const $btn = createElement('button', 'button');
 
-  $btn.innerText = "Restart";
+  $btn.innerText = 'Restart';
   
   $div.appendChild($btn);
 
-  $btn.addEventListener("click", function () {
+  $btn.addEventListener('click', function () {
     window.location.reload();
-    // console.log("Restart");
   });
 
   return $div;
 }
 
-//Функция создает игрока
+/**
+ * Функция создает игрока
+ * @param playerObject
+ * @returns {HTMLElement}
+ */
 function createPlayer(playerObject) {
-  const $player = createElement("div", `player${playerObject.player}`);
-  const $progressbar = createElement("div", "progressbar");
-  const $life = createElement("div", "life");
-  const $name = createElement("div", "name");
-  const $character = createElement("div", "character");
-  const $img = createElement("img");
+  const $player = createElement('div', `player${playerObject.player}`);
+  const $progressbar = createElement('div', 'progressbar');
+  const $life = createElement('div', 'life');
+  const $name = createElement('div', 'name');
+  const $character = createElement('div', 'character');
+  const $img = createElement('img');
   
   $life.style.width = `${playerObject.hp}%`;
   $name.innerText = playerObject.name;
@@ -86,16 +93,20 @@ function createPlayer(playerObject) {
   return $player;
 }
 
-//Функция управляет отоборажением кнопок
+/**
+ * Функция управляет отоборажением кнопок
+ *
+ * @param {boolean} bool
+ * @param control
+ */
 function buttonRender(bool, control) {
   if (bool) {
-    //$fightButton.disabled = true; //Блокируем кнопку Random
-    // $fightButton.style = "display: none";
-
     //Деактивируем элементы формы
     if (control) {
-      for (item of control) {
-        if (item.tagName === 'INPUT' || item.tagName === 'BUTTON') { item.disabled = true }
+      for (let item of control) {
+        if (item.tagName === 'INPUT' || item.tagName === 'BUTTON') {
+          item.disabled = true;
+        }
       }
     }
        
@@ -103,69 +114,102 @@ function buttonRender(bool, control) {
   }
 }
 
-//Функция возврщает div победителя или ничьи
-function playerWin(className, playerName) {
+/**
+ * Функция возврщает div победителя или ничьи
+ * @param {HTMLElement} element
+ * @param {string} [playerName]
+ * @returns {HTMLElement}
+ */
+function playerWin(element, playerName) {
   if (playerName) {
-    className.style = 'font-size: 36px'
-    className.innerText = playerName + " wins";
-  } else className.innerText = "DEAD BOTH";
+    element.style.fontSize = '36px';
+    element.innerText = playerName + " wins";
+  } else {
+    element.innerText = 'DEAD BOTH';
+  }
 
-  return className;
+  return element;
 }
 
-//Функция трансляция/комментарии боя
-function createComment(className, text,  player) {
-  className.style = 'font-size: 20px'
+/**
+ * Функция трансляция/комментарии боя
+ * @param {HTMLElement} className
+ * @param {string} text
+ * @returns {HTMLElement}
+ */
+function createComment(className, text) {
+  className.style.fontSize = '20px';
   className.innerText = text;
   
   return className;
 }
 
-//Функция генерирует случайное число в диапазоне 1...number
+/**
+ * Функция генерирует случайное число в диапазоне 1...number
+ * @param {number} number
+ * @returns {number}
+ */
 function getRandom(number) {
-  if (number) {
-    return Math.ceil(Math.random() * number);
-  } else return 20;
+  return number ? Math.ceil(Math.random() * number) : 20;
 }
 
-//Функция уменьшает HP у объекта (игрока) на величину damage
+/**
+ * Функция уменьшает HP у объекта (игрока) на величину damage
+ * @param {number} damage
+ */
 function changeHP(damage) {
-  if (this.hp - damage > 0) {
-    this.hp -= damage;
-  } else this.hp = 0;
+  this.hp -= damage;
+
+  if (this.hp <= 0) {
+    this.hp = 0;
+  }
 }
 
-//Функция возвращает div .life определенного объекта (игрока)
+/**
+ * Функция возвращает div .life определенного объекта (игрока)
+ * @returns {Element}
+ */
 function elHP() {
-  // console.log('Player:', this.player)
-
   return document.querySelector(`.player${this.player} .life`);
 }
 
-//Функция отрисовывает "жизнь" у определенного объекта (игрока)
+/**
+ * Функция отрисовывает "жизнь" у определенного объекта (игрока)
+ * @returns {string}
+ */
 function renderHP() {
-  //const $playerLife = elHP.call(this); //Функции elHP передаем объект player через метод call
-  // $playerLife.style.width = `${this.hp}%`;
-
-  //return $playerLife;
-  return (this.elHP().style.width = `${this.hp}%`);
+  this.elHP().style.width = `${this.hp}%`;
 }
 
-//Функция - удар противника
+/**
+ * Функция - удар противника
+ * @returns {{hit: (string), defence: (string), value: number}}
+ */
 function enemyAttack() {
-  const hit = ATTACK[getRandom(3) - 1];
-  const defence = ATTACK[getRandom(3) - 1];
+  const length = ATTACK.length;
+  const hit = ATTACK[getRandom(length) - 1];
+  const defence = ATTACK[getRandom(length) - 1];
+  const value = getRandom(HIT[hit]);
 
   return {
-    value: getRandom(HIT[hit]),
+    value,
     hit,
     defence,
   };
 }
 
-//Функция - удар игрока (обработка формы)
+/**
+ * Функция - удар игрока (обработка формы)
+ * @param {Element} formControl
+ * @returns {{hit: string, defence: string, value: number}}
+ */
 function playerAttack(formControl) {
-  const attack = {};
+  const attack = {
+    value: 0,
+    hit: '',
+    defence: '',
+  };
+
   if (formControl) {
     for (let item of formControl) {
       if (item.checked && item.name === "hit") {
@@ -178,63 +222,44 @@ function playerAttack(formControl) {
       //Обнуление контролов
       item.checked = false;
     }
-  } else
-    attack = {
-      value: 0,
-      hit: "",
-      defence: "",
-    };
+  }
 
   return attack;
 }
 
-//Fight
+/**
+ * Fight
+ * @param player1
+ * @param player2
+ */
 function fight(player1, player2) {
   const player = playerAttack($formControl); //Условно играет за объект player1
   const enemy = enemyAttack(); //Условно играет за объект player2
 
-  // console.log('Player1', player)
-  // console.log('Player2', enemy)
-
   //Определяем результат раунда
-  if (player.hit != enemy.defence && enemy.hit != player.defence) {
-    player1.changeHP(enemy.value);//Отнимаем жизни у player1 на величину удара противника
-    player2.changeHP(player.value);//Отнимаем жизни у player2 на величину удара противника
-    //Комментируем раунд
-    $arenas.appendChild(createComment(
-      $winTitle ,`${player1.name} damaged | ${player2.name} damaged`
-      ));
+  if (player.hit !== enemy.defence) {
+    player2.changeHP(player.value);
+    player2.renderHP();
   }
 
-  if (player.hit != enemy.defence && enemy.hit === player.defence) {
-    player2.changeHP(player.value);
-    $arenas.appendChild(createComment(
-      $winTitle ,`${player1.name} blocked | ${player2.name} damaged`
-      ));
-  }  
-
-  if (player.hit === enemy.defence && enemy.hit != player.defence) {
+  if (enemy.hit !== player.defence) {
     player1.changeHP(enemy.value);
-    $arenas.appendChild(createComment(
-      $winTitle ,`${player1.name} damaged | ${player2.name} blocked`
-      ));
-  }  
-
-  if (player.hit === enemy.defence && enemy.hit === player.defence) {
-    $arenas.appendChild(createComment(
-      $winTitle ,`${player1.name} blocked | ${player2.name} blocked`
-      ));
-  }   
+    player1.renderHP();
+  }
 }
 
-//Функция следит за результатом боя, определяет победителя
+/**
+ * Функция следит за результатом боя, определяет победителя
+ * @param player1
+ * @param player2
+ */
 function checkResult(player1, player2) {
   if (player1.hp <= 0 || player2.hp <= 0) {
     buttonRender(true, $formControl); //Передаем флаг для отрисовки/блокировки кнопок
   }
   //Определяем победителя
   if (player1.hp === 0 && player2.hp === 0) {
-    $arenas.appendChild(playerWin());
+    $arenas.appendChild(playerWin($winTitle));
   } else if (player1.hp === 0 && player2.hp > 0) {
     $arenas.appendChild(playerWin($winTitle ,player2.name));
   } else if (player2.hp === 0 && player1.hp > 0) {
@@ -251,9 +276,6 @@ $formControl.addEventListener("submit", function (event) {
   event.preventDefault();
 
   fight(player1, player2)
-
-  player1.renderHP();
-  player2.renderHP();
 
   checkResult(player1, player2);
 });
