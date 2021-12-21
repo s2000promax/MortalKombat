@@ -23,13 +23,13 @@ export function renderHP() {
  * @param {string} stringSrc
  * @returns {HTMLElement}
  */
-export function createHtmlElement(
+export const createHtmlElement = (
   tag = 'div',
   className,
   text,
   customStyle,
   stringSrc
-) {
+) => {
   const $tag = document.createElement(tag);
   //add className
   if (className) {
@@ -56,7 +56,7 @@ export function createHtmlElement(
  * @param playerObject
  * @returns {HTMLElement}
  */
-export function createHtmlPlayer({ id, name, hp, img }) {
+export const createHtmlPlayer = ({ id, name, hp, img }) => {
   const $player = createHtmlElement('div', `player${id}`);
   const $progressbar = createHtmlElement('div', 'progressbar');
   const $life = createHtmlElement('div', 'life', null, `width: ${hp}%`);
@@ -71,7 +71,7 @@ export function createHtmlPlayer({ id, name, hp, img }) {
   return $player;
 }
 
-export function clearForm(control) {
+export const clearForm = (control) => {
   if (control) control.remove();
 }
 
@@ -80,7 +80,7 @@ export function clearForm(control) {
  *
  * @returns {HTMLElement}
  */
-export function createReloadButton() {
+export const createReloadButton = () => {
   const $container = createHtmlElement('div', 'reloadWrap');
   const $btn = createHtmlElement('button', 'button', 'Restart');
 
@@ -99,7 +99,7 @@ export function createReloadButton() {
  * @param {string} playerName
  * @returns {HTMLElement}
  */
-export function resultGameTitle(playerName) {
+export const resultGameTitle = (playerName) => {
   let text = '';
   if (playerName) {
     text = playerName + ' wins';
@@ -115,7 +115,7 @@ export function resultGameTitle(playerName) {
  * @param {...Object} stat
  * @returns {HTMLElement}
  */
-export function createStatisticGame({ ...stat }) {
+export const createStatisticGame = ({ ...stat }) => {
   const $container = createHtmlElement('div', 'control');
   const $div = createHtmlElement('div', 'inputWrap');
   const $h2 = createHtmlElement('h2', null, 'Table of score');

@@ -3,7 +3,7 @@
  * @param {number} number
  * @returns {number}
  */
-export function getRandom(number) {
+export const getRandom = (number) => {
   return number ? Math.ceil(Math.random() * number) : 0;
 }
 
@@ -22,7 +22,7 @@ export function changeHP(damage) {
  * @param {Array} array
  * @returns {number}
  */
-export function searchMinIndex(array) {
+export const searchMinIndex = (array) => {
   let index = 0;
   let min = array[0];
   for (let i = 1; i <= array.length; i++) {
@@ -40,7 +40,7 @@ export function searchMinIndex(array) {
  * @param {Array} array
  * @returns {number}
  */
-export function searchMaxIndex(array) {
+export const searchMaxIndex = (array) => {
   let index = 0;
   let max = array[0];
   for (let i = 1; i <= array.length; i++) {
@@ -59,7 +59,7 @@ export function searchMaxIndex(array) {
  * @param {number} number
  * @returns {string}
  */
-export function addSeparate(width = 50, number) {
+export const addSeparate = (width = 50, number) => {
   let result = '';
   for (let i = 0; i <= Math.ceil(width / 2); i++) {
     result += '-';
@@ -77,7 +77,7 @@ export function addSeparate(width = 50, number) {
  * @param {Date} time 
  * @returns {string}
  */
-export function getTimeStrigFormat(time = new Date()) {
+export const getTimeStrigFormat = (time = new Date()) => {
   let timeStringFormat = '';
   let hh = time.getHours(),
     mm = time.getMinutes(),

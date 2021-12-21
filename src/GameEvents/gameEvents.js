@@ -5,7 +5,7 @@ import { getRandom } from '../Utils/utils.js';
  * Function generate enemy attack
  * @returns {{hit: (string), defence: (string), value: number}} Object
  */
-function enemyAttack() {
+const enemyAttack = () => {
   const length = ATTACK.length;
   const hit = ATTACK[getRandom(length) - 1];
   const defence = ATTACK[getRandom(length) - 1];
@@ -23,7 +23,7 @@ function enemyAttack() {
  * @param {Element} formControl
  * @returns {{hit: string, defence: string, value: number}} Object
  */
-function playerAttack(formControl) {
+const playerAttack = (formControl) => {
   const attack = {
     value: 0,
     hit: '',
@@ -55,7 +55,7 @@ function playerAttack(formControl) {
  * @returns {hitComputer: (Array), hitPlayer: (Array),
  *          defencePlayer: (Array), defenceComputer: (Array),} Object
  */
-export function fight(player1, player2, formControl) {
+export const fight = (player1, player2, formControl) => {
   const roundResult = {
     hitComputer: [],
     hitPlayer: [],
@@ -97,7 +97,7 @@ export function fight(player1, player2, formControl) {
  * @returns {resultGame: (string | null),
  *           winPlayerId: (number | null) } Object
  */
-export function checkResult(player1, player2) {
+export const checkResult = (player1, player2) => {
   const result = {
     resultGame: null,
     winPlayerId: null,

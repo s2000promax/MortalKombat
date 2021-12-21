@@ -14,7 +14,7 @@ const $chat = document.querySelector('.chat');
  * @param {string} life
  * @param {number} round
  */
-export function generateLogs(
+export const generateLogs = (
   type = '',
   player1 = { name: '' },
   player2 = { name: '' },
@@ -22,7 +22,7 @@ export function generateLogs(
   damage = '',
   life = '',
   round = null
-) {
+) => {
   let text = '';
 
   let timeString = getTimeStrigFormat(time); //Format time to String with 0(first zero befor time)
