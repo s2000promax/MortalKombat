@@ -3,18 +3,8 @@
  * @param {number} number
  * @returns {number}
  */
-export const getRandom = (number) => {
+export const getRandom = number => {
   return number ? Math.ceil(Math.random() * number) : 0;
-}
-
-/**
- * Change HP from PlayerObject
- * @param {number} damage
- */
-export function changeHP(damage) {
-  this.hp -= damage;
-
-  if (this.hp <= 0) this.hp = 0;
 }
 
 /**
@@ -22,7 +12,7 @@ export function changeHP(damage) {
  * @param {Array} array
  * @returns {number}
  */
-export const searchMinIndex = (array) => {
+export const searchMinIndex = array => {
   let index = 0;
   let min = array[0];
   for (let i = 1; i <= array.length; i++) {
@@ -33,14 +23,14 @@ export const searchMinIndex = (array) => {
   }
 
   return index;
-}
+};
 
 /**
  * Function search index of max element of Array
  * @param {Array} array
  * @returns {number}
  */
-export const searchMaxIndex = (array) => {
+export const searchMaxIndex = array => {
   let index = 0;
   let max = array[0];
   for (let i = 1; i <= array.length; i++) {
@@ -51,7 +41,7 @@ export const searchMaxIndex = (array) => {
   }
 
   return index;
-}
+};
 
 /**
  * Function create string separate
@@ -70,22 +60,17 @@ export const addSeparate = (width = 50, number) => {
   }
 
   return result;
-}
+};
 
 /**
  * Function return time to string format with 0 (first zero befor time)
- * @param {Date} time 
+ * @param {Date} time
  * @returns {string}
  */
-export const getTimeStrigFormat = (time = new Date()) => {
-  let timeStringFormat = '';
-  let hh = time.getHours(),
-    mm = time.getMinutes(),
-    ss = time.getSeconds();
+export const getTimeStrigFormat = (time) => {
+  const el = (time) => {
+    return time.toString().length > 1 ? time : '0' + time;
+  }
 
-  timeStringFormat = `${hh.toString().length > 1 ? hh : '0' + hh}:${
-    mm.toString().length > 1 ? mm : '0' + mm
-  }:${ss.toString().length > 1 ? ss : '0' + ss}`;
-
-  return timeStringFormat;
+  return `${el(time.getHours())}:${el(time.getMinutes())}:${el(time.getSeconds())}`;
 }

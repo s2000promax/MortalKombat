@@ -1,79 +1,46 @@
 import { searchMinIndex, searchMaxIndex } from '../Utils/utils.js';
 
-/**
- * Functon create statistics object from template
- * @returns Object
- */
-export function createStatistics() {
-  const totalRounds = 0; //Total game rounds
-  const hitCount = 0; //Total counter attacks
-  const defCount = 0; //Total counter defences
-  const timeRound = []; //Array of time for each round
-  const totalTime = null; //Total game time
-  const fast = null; //Index of Arrray(timeRound) for round fastest (round with less time)
-  const slow = null; //index of Arrray(timeRound) for round slowest (round with  most time)
-  const timeTotalStart = null; //Game start time
-  const timeTotalEnd = null; //GameOver time
+export default class Statistics {
 
-  return new Object({
-    totalRounds,
-    hitCount,
-    defCount,
-    timeRound,
-    totalTime,
-    fast,
-    slow,
-    timeTotalStart,
-    timeTotalEnd,
-  });
-}
-
-Object.prototype.changeStatistics = changeStatistics;
-Object.prototype.pushToRoundArray = pushToRoundArray;
-Object.prototype.setTotalRounds = setTotalRounds;
-Object.prototype.setTimeTotalStart = setTimeTotalStart;
-Object.prototype.setTimeTotalEnd = setTimeTotalEnd;
-Object.prototype.updateStatistic = updateStatistic;
-Object.prototype.setTotalGameTime = setTotalGameTime;
-
-//Functions for change elements of object statistics
-
-function changeStatistics(argument) {
-  switch (argument) {
-    case 'hit':
-      this.hitCount += 1;
-      break;
-    case 'defence':
-      this.defCount += 1;
-      break;
+  constructor(props) {
+    this.totalRounds = 0; //Total game rounds
+    this.hitCount = 0; //Total counter attacks
+    this.defCount = 0; //Total counter defences
+    this.timeRound = []; //Array of time for each round
+    this.timeGameTotal = null; //Total game time
+    this.timeGameStart = null; //Game start time
+    this.timeGameEnd = null; //GameOver time
+    this.fast = null; //Index of Arrray(timeRound) for round fastest (round with less time)
+    this.slow = null; //index of Arrray(timeRound) for round slowest (round with  most time)
+    
   }
-}
+  
+   //Get Methods 
+   getTotalRounds = () => {return this.totalRounds};
+   getHitCount = () => {return this.hitCount};
+   getDefenceCount = () => {return this.defCount};
+   getNumberFastestRound = () => {return this.fast + 1}; //Plus 1 - for Number (not index of array)
+   getTimeFastestRound = () => {return this.timeRound[this.fast]};
+   getNumberSlowestRound = () => {return this.slow + 1}; //Plus 1 - for Number (not index of array)
+   getTimeSlowestRound = () => {return this.timeRound[this.slow]};
+   getTimeGameTotal = () => {return this.timeGameTotal};
 
-function pushToRoundArray(timeStart, timeEnd) {
-  this.timeRound.push((timeEnd.getTime() - timeStart.getTime()) / 1000);
-}
+   //Set Methods
+   setHitCount = () => this.hitCount += 1;
+   setDefenceCount = () => this.defCount += 1;
 
-function setTotalGameTime() {
-  this.totalTime =
-    (this.timeTotalEnd.getTime() - this.timeTotalStart.getTime()) / 1000;
-}
+   setToArrayTimeRound = (timeRoundStart, timeRoundEnd) => 
+     this.timeRound.push((timeRoundEnd - timeRoundStart) / 1000);
+  
+   setTimeGameStart = (timeGameStart) => this.timeGameStart = timeGameStart;
+   setTimeGameEnd = (timeGameEnd) => this.timeGameEnd = timeGameEnd;
+   setTotalGameTime = () => 
+     this.timeGameTotal = (this.timeGameEnd - this.timeGameStart) / 1000;
 
-function setTotalRounds() {
-  this.totalRounds = this.timeRound.length;
-}
-
-function setTimeTotalStart(timeTotalStart) {
-  this.timeTotalStart = timeTotalStart;
-}
-
-function setTimeTotalEnd(timeTotalEnd) {
-  this.timeTotalEnd = timeTotalEnd;
-}
-
-function updateStatistic() {
-  this.setTotalRounds();
-  this.setTotalGameTime();
-
-  this.fast = searchMinIndex(this.timeRound);
-  this.slow = searchMaxIndex(this.timeRound);
+   setTotalRounds = () => this.totalRounds = this.timeRound.length;  
+   
+   setExtendStatistic = () => {
+     this.fast = searchMinIndex(this.timeRound);
+     this.slow = searchMaxIndex(this.timeRound);
+   }  
 }
