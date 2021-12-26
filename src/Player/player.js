@@ -9,12 +9,12 @@ class ElementHP {
 }
 
 export default class PlayerObject extends ElementHP {
-   constructor({id, name, img}) {
+   constructor({id, name, img, hp}) {
       super(id);
       this.id = id;
       this.name = name;
       this.img = img;
-      this.hp = 100;
+      this.hp = hp;
 
       this.elHP = elHP;
       this.renderHP = renderHP;
