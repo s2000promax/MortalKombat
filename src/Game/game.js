@@ -1,4 +1,4 @@
-import { fight, checkResult } from "./gameEvent.js";
+import { newFight, checkResult } from "./gameEvent.js";
 export default class Game {
 
   start = ({player1, player2, ui, logs, stat}) => {
@@ -12,7 +12,7 @@ export default class Game {
      $arenas.append(ui.createHtmlPlayer(player1), ui.createHtmlPlayer(player2));
         
      //Generate fight round
-     $formControl.addEventListener('submit', function (event) {
+     $formControl.addEventListener('submit', async function (event) {
        event.preventDefault();
 
        //For collect statistics
@@ -30,7 +30,9 @@ export default class Game {
        }
 
        //fight round
-       const { hitPlayer, hitComputer, defencePlayer, defenceComputer } = fight(player1, player2, $formControl);
+       const player = await player1.attack($formControl);
+      
+       const { hitPlayer, hitComputer, defencePlayer, defenceComputer } = await newFight(player1, player2 ,player);
 
        if (hitPlayer.length) {
                                logs.generate(
@@ -73,7 +75,7 @@ export default class Game {
        logs.generate(); //Generate separate between rounds
 
   //Checking result of the round
-  const { resultGame, winPlayerId } = checkResult(player1, player2);
+  const { resultGame, winPlayerId } = await checkResult(player1, player2);
 
   if (resultGame) {
     stat.setTimeGameEnd(timeEnd.getTime()); //Set game end time in object statistics
@@ -93,7 +95,7 @@ export default class Game {
           logs.generate('end', player1, player2, timeEnd);
         } else {
           $resultGameTitle = ui.resultGameTitle(player2.name);
-          logsgenerate('end', player2, player1, timeEnd);
+          logs.generate('end', player2, player1, timeEnd);
         }
         break;
     }

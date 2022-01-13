@@ -106,7 +106,7 @@ const createReloadButton = () => {
 
   //Add listener on the button
   $btn.addEventListener('click', function () {
-    window.location.reload();
+    window.location.pathname = 'index.html'
   });
 
   return $container;

@@ -1,6 +1,6 @@
 import { HIT, ATTACK } from '../Const/const.js';
 import { getRandom } from '../Utils/utils.js';
-
+import { getFight } from '../Ajax/ajax.js';
 
 /**
  * Function generate enemy attack
@@ -68,6 +68,44 @@ export const fight = (player1, player2, formControl) => {
   const player = player1.attack(formControl); //Сonditionally play for player1
   const enemy = player2.attack()              //Сonditionally play for player1
 
+  if (player.defence !== enemy.hit) {
+    player1.changeHP(player.value);
+    player1.renderHP();
+
+    roundResult.hitComputer = ['hit', player2.id, player1.id, player.value];
+  }
+
+  if (enemy.defence !== player.hit) {
+    player2.changeHP(enemy.value);
+    player2.renderHP();
+
+    roundResult.hitPlayer = ['hit', player1.id, player2.id, enemy.value];
+  }
+
+  if (player.defence === enemy.hit) {
+    roundResult.defencePlayer = ['defence', player2.id, player1.id];
+  }
+
+  if (enemy.defence === player.hit) {
+    roundResult.defenceComputer = ['defence', player1.id, player2.id];
+  }
+
+  return roundResult;
+};
+
+export const newFight = async (player1, player2, controls) => {
+  const roundResult = {
+    hitComputer: [],
+    hitPlayer: [],
+    defencePlayer: [],
+    defenceComputer: [],
+  };
+
+    const getFightData = await getFight(controls.hit, controls.defence);
+    
+  const player = getFightData['player1']; //Сonditionally play for player1
+  const enemy = getFightData['player2'];  //Сonditionally play for player1
+  
   if (player.defence !== enemy.hit) {
     player1.changeHP(player.value);
     player1.renderHP();
