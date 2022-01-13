@@ -1,3 +1,21 @@
+export default class UI {
+  //Set Methods
+  setQuerySelector = setQuerySelector;
+  createHtmlPlayer = createHtmlPlayer;
+  clearForm = clearForm;
+  resultGameTitle = resultGameTitle;
+  createReloadButton = createReloadButton;
+  createStatisticGame = createStatisticGame;
+}
+
+/**
+ * Function returned html element
+ * @returns {Element}
+ */
+const setQuerySelector = tagClassName => {
+  return document.querySelector(tagClassName);
+  }
+
 /**
  * Function returned div .life element of define in id players
  * @returns {Element}
@@ -23,7 +41,7 @@ export function renderHP() {
  * @param {string} stringSrc
  * @returns {HTMLElement}
  */
-export const createHtmlElement = (
+const createHtmlElement = (
   tag = 'div',
   className,
   text,
@@ -56,7 +74,7 @@ export const createHtmlElement = (
  * @param playerObject
  * @returns {HTMLElement}
  */
-export const createHtmlPlayer = ({ id, name, hp, img }) => {
+const createHtmlPlayer = ({ id, name, hp, img }) => {
   const $player = createHtmlElement('div', `player${id}`);
   const $progressbar = createHtmlElement('div', 'progressbar');
   const $life = createHtmlElement('div', 'life', null, `width: ${hp}%`);
@@ -71,7 +89,7 @@ export const createHtmlPlayer = ({ id, name, hp, img }) => {
   return $player;
 }
 
-export const clearForm = (control) => {
+const clearForm = (control) => {
   if (control) control.remove();
 }
 
@@ -80,7 +98,7 @@ export const clearForm = (control) => {
  *
  * @returns {HTMLElement}
  */
-export const createReloadButton = () => {
+const createReloadButton = () => {
   const $container = createHtmlElement('div', 'reloadWrap');
   const $btn = createHtmlElement('button', 'button', 'Restart');
 
@@ -99,7 +117,7 @@ export const createReloadButton = () => {
  * @param {string} playerName
  * @returns {HTMLElement}
  */
-export const resultGameTitle = (playerName) => {
+const resultGameTitle = (playerName) => {
   let text = '';
   if (playerName) {
     text = playerName + ' wins';
@@ -115,7 +133,8 @@ export const resultGameTitle = (playerName) => {
  * @param {...Object} stat
  * @returns {HTMLElement}
  */
-export const createStatisticGame = ({ ...stat }) => {
+const createStatisticGame = ({totalRounds, hitCount, defenceCount, 
+              fastest, fastestTime,  slowest, slowestTime, timeGameTotal }) => {
   const $container = createHtmlElement('div', 'control');
   const $div = createHtmlElement('div', 'inputWrap');
   const $h2 = createHtmlElement('h2', null, 'Table of score');
@@ -129,24 +148,24 @@ export const createStatisticGame = ({ ...stat }) => {
   let $tr6 = createHtmlElement('tr');
 
   $tr1.innerHTML += `<td>Total Rounds</td>`;
-  $tr1.innerHTML += `<td colspan="2">${stat.timeRound.length}</td>`;
+  $tr1.innerHTML += `<td colspan="2">${totalRounds}</td>`;
 
   $tr2.innerHTML += `<td>Total Hits</td>`;
-  $tr2.innerHTML += `<td colspan="2">${stat.hitCount}</td>`;
+  $tr2.innerHTML += `<td colspan="2">${hitCount}</td>`;
 
   $tr3.innerHTML += `<td>Total Defences</td>`;
-  $tr3.innerHTML += `<td colspan="2">${stat.defCount}</td>`;
+  $tr3.innerHTML += `<td colspan="2">${defenceCount}</td>`;
 
   $tr4.innerHTML += `<td>Fastest Round</td>`;
-  $tr4.innerHTML += `<td>${stat.fast + 1}</td>`;
-  $tr4.innerHTML += `<td>${stat.timeRound[stat.fast]} s</td>`;
+  $tr4.innerHTML += `<td>${fastest}</td>`;
+  $tr4.innerHTML += `<td>${fastestTime} s</td>`;
 
   $tr5.innerHTML += `<td>Slowest Round</td>`;
-  $tr5.innerHTML += `<td>${stat.slow + 1}</td>`;
-  $tr5.innerHTML += `<td>${stat.timeRound[stat.slow]} s</td>`;
+  $tr5.innerHTML += `<td>${slowest}</td>`;
+  $tr5.innerHTML += `<td>${slowestTime} s</td>`;
 
   $tr6.innerHTML += `<td>Game times</td>`;
-  $tr6.innerHTML += `<td colspan="2">${stat.totalTime} s</td>`;
+  $tr6.innerHTML += `<td colspan="2">${timeGameTotal} s</td>`;
 
   $table.appendChild($tr1);
   $table.appendChild($tr2);

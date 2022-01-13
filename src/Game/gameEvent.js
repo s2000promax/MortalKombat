@@ -1,29 +1,32 @@
 import { HIT, ATTACK } from '../Const/const.js';
 import { getRandom } from '../Utils/utils.js';
 
+
 /**
  * Function generate enemy attack
  * @returns {{hit: (string), defence: (string), value: number}} Object
  */
-const enemyAttack = () => {
-  const length = ATTACK.length;
-  const hit = ATTACK[getRandom(length) - 1];
-  const defence = ATTACK[getRandom(length) - 1];
-  const value = getRandom(HIT[hit]);
-
-  return {
-    value,
-    hit,
-    defence,
+export const enemyAttack = () => {
+  const result = {
+    value: 0,
+    hit: '',
+    defence: '',
   };
-}
+  const length = ATTACK.length;
+
+  result.hit = ATTACK[getRandom(length) - 1];
+  result.defence = ATTACK[getRandom(length) - 1];
+  result.value = getRandom(HIT[result.hit]);
+
+  return result;
+};
 
 /**
  * Function create user attack
  * @param {Element} formControl
  * @returns {{hit: string, defence: string, value: number}} Object
  */
-const playerAttack = (formControl) => {
+export const playerAttack = (formControl) => {
   const attack = {
     value: 0,
     hit: '',
@@ -45,7 +48,7 @@ const playerAttack = (formControl) => {
   }
 
   return attack;
-}
+};
 
 /**
  * function generate fight round
@@ -62,8 +65,8 @@ export const fight = (player1, player2, formControl) => {
     defencePlayer: [],
     defenceComputer: [],
   };
-  const player = playerAttack(formControl); //Сonditionally play for player1
-  const enemy = enemyAttack(); //Сonditionally play for player1
+  const player = player1.attack(formControl); //Сonditionally play for player1
+  const enemy = player2.attack()              //Сonditionally play for player1
 
   if (player.defence !== enemy.hit) {
     player1.changeHP(player.value);
@@ -88,7 +91,7 @@ export const fight = (player1, player2, formControl) => {
   }
 
   return roundResult;
-}
+};
 
 /**
  * Function return result fight round
@@ -114,4 +117,4 @@ export const checkResult = (player1, player2) => {
   }
 
   return result;
-}
+};

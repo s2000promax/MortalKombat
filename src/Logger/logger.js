@@ -1,6 +1,10 @@
 import { LOGS } from '../Const/const.js';
 import { addSeparate, getRandom, getTimeStrigFormat } from '../Utils/utils.js';
 
+export default class Logger {
+  generate = generateLogs;
+}
+
 //For autonomous logger work, create variable $chat here
 const $chat = document.querySelector('.chat');
 
@@ -14,15 +18,14 @@ const $chat = document.querySelector('.chat');
  * @param {string} life
  * @param {number} round
  */
-export const generateLogs = (
-  type = '',
-  player1 = { name: '' },
-  player2 = { name: '' },
-  time = new Date(),
-  damage = '',
-  life = '',
-  round = null
-) => {
+const generateLogs = (
+                      type = '',
+                      player1 = { name: '' },
+                      player2 = { name: '' },
+                      time = new Date(),
+                      damage = '',
+                      life = ''
+                      ) => {
   let text = '';
 
   let timeString = getTimeStrigFormat(time); //Format time to String with 0(first zero befor time)
@@ -41,11 +44,7 @@ export const generateLogs = (
   });
 
   switch (type) {
-    case 'start':
-      text = LOGS[type]
-        .replace('[time]', timeString)
-        .replace('[player1]', player1.name)
-        .replace('[player2]', player2.name);
+    case 'start': text = LOGS[type].replace('[time]', timeString).replace('[player1]', player1.name)  .replace('[player2]', player2.name);
       break;
     case 'end':
       text = `${timeString} ${LOGS[type][index]
